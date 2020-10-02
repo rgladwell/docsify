@@ -166,9 +166,11 @@ export function fetchMixin(proto) {
           path + stringifyQuery(query, ['id']),
           false,
           requestHeaders
-        ).then(text => this._renderCover(text, coverOnly));
+        ).then(text =>
+          this._renderCover(text, coverOnly, this.config.fileHostingEnabled)
+        );
       } else {
-        this._renderCover(null, coverOnly);
+        this._renderCover(null, coverOnly, this.config.fileHostingEnabled);
       }
 
       return coverOnly;

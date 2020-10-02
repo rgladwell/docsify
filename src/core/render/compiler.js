@@ -67,7 +67,7 @@ export class Compiler {
     this.linkTarget = config.externalLinkTarget || '_blank';
     this.linkRel =
       this.linkTarget === '_blank' ? config.externalLinkRel || 'noopener' : '';
-    this.contentBase = router.getBasePath();
+    this.contentBase = router.getBasePath(config.fileHostingEnabled);
 
     const renderer = this._initRenderer();
     this.heading = renderer.heading;
@@ -144,6 +144,7 @@ export class Compiler {
     if (config.include) {
       if (!isAbsolutePath(href)) {
         href = getPath(
+          config.fileHostingEnabled,
           process.env.SSR ? '' : this.contentBase,
           getParentPath(this.router.getCurrentPath()),
           href

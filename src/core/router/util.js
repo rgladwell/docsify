@@ -107,7 +107,14 @@ function normaliseFragment(path) {
 }
 
 export function getPath(...args) {
-  return cleanPath(args.map(normaliseFragment).join('/'));
+  const fileHosting = args[0];
+  const paths = args.slice(1);
+
+  if (fileHosting) {
+    return cleanPath(paths.map(normaliseFragment).join('/'));
+  } else {
+    return cleanPath(paths.join('/'));
+  }
 }
 
 export const replaceSlug = cached(path => {

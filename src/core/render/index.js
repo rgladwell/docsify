@@ -182,7 +182,7 @@ export function renderMixin(proto) {
     });
   };
 
-  proto._renderCover = function(text, coverOnly) {
+  proto._renderCover = function(text, coverOnly, config) {
     const el = dom.getNode('.cover');
 
     dom.toggleClass(
@@ -211,7 +211,11 @@ export function renderMixin(proto) {
 
         dom.toggleClass(el, 'add', 'has-mask');
         if (!isAbsolutePath(m[1])) {
-          path = getPath(this.router.getBasePath(), m[1]);
+          path = getPath(
+            config.fileHostingEnabled,
+            this.router.getBasePath(config.fileHostingEnabled),
+            m[1]
+          );
         }
 
         el.style.backgroundImage = `url(${path})`;
@@ -263,7 +267,11 @@ export function initRender(vm) {
       const isRelative = /^\./.test(config.logo);
 
       if (!isBase64 && !isExternal && !isRelative) {
-        config.logo = getPath(vm.router.getBasePath(), config.logo);
+        config.logo = getPath(
+          config.fileHostingEnabled,
+          vm.router.getBasePath(config.fileHostingEnabled),
+          config.logo
+        );
       }
     }
 

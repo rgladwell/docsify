@@ -46,7 +46,9 @@ export class History {
     path = config.alias ? getAlias(path, config.alias) : path;
     path = getFileName(path, ext);
     path = path === `/README${ext}` ? config.homepage || path : path;
-    path = isAbsolutePath(path) ? path : getPath(base, path);
+    path = isAbsolutePath(path)
+      ? path
+      : getPath(config.fileHostingEnabled, base, path);
 
     if (isRelative) {
       path = path.replace(new RegExp(`^${base}`), '');

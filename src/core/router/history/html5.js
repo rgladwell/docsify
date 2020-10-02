@@ -10,7 +10,7 @@ export class HTML5History extends History {
   }
 
   getCurrentPath() {
-    const base = this.getBasePath();
+    const base = this.getBasePath(this.config.fileHostingEnabled);
     let path = window.location.pathname;
 
     if (base && path.indexOf(base) === 0) {
@@ -56,7 +56,7 @@ export class HTML5History extends History {
       path = path.slice(0, queryIndex);
     }
 
-    const base = getPath(location.origin);
+    const base = getPath(this.config.fileHostingEnabled, location.origin);
     const baseIndex = path.indexOf(base);
 
     if (baseIndex > -1) {
